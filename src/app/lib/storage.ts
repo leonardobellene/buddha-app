@@ -1,4 +1,13 @@
 export function getUserInfo() {
+  // Check if we're in the browser environment
+  if (typeof window === 'undefined') {
+    return {
+      username: '',
+      gender: 'Male',
+      language: 'English',
+    };
+  }
+  
   return {
     username: localStorage.getItem('username') || '',
     gender: localStorage.getItem('gender') || 'Male',
@@ -7,6 +16,9 @@ export function getUserInfo() {
 }
 
 export function isAllowedToChat(): boolean {
+  if (typeof window === 'undefined') {
+    return false;
+  }
   return sessionStorage.getItem('allowed') === 'true';
 }
 

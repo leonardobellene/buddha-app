@@ -14,10 +14,14 @@ export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
+  const [language, setLanguage] = useState('English'); // Default language
   const hasStartedStreamingRef = useRef(false);
 
-  // Get user's language
-  const { language } = getUserInfo();
+  // Get user's language safely on client side
+  useEffect(() => {
+    const { language: userLanguage } = getUserInfo();
+    setLanguage(userLanguage);
+  }, []);
 
   // Custom hook for reusable auth logic
   const { loading, initialMessage } = useAuth();
